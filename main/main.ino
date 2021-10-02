@@ -10,6 +10,10 @@
 
 #define   SERIAL_SOF              0x88
 #define   SERIAL_MAX_LEN          5
+#define   SERIAL_DATA_LEN         3
+
+#define   BUTTON_DEBOUNCE_DLY_MS  500
+#define   START_UP_DLY_MS         500
 
 enum class SerialCMD : uint8_t {
   STATE       = 0x10,
@@ -83,10 +87,18 @@ RGB stateColors[4] {
   {0, 1, 0}   //! STAGE_RDY   -> Green
 };
 
+
+uint32_t lastPress = millis();
 // Global ISR
 void ChangeStateISR() {
-  lastChange = millis();
-  state = nextState;
+  // Software debouncer
+  if (millis() - lastPress > BUTTON_DEBOUNCE_DLY_MS){
+    lastPress = millis();
+
+    // Actual ISR
+    lastChange = millis();
+    state = nextState;
+  }
 }
 
 
@@ -144,48 +156,44 @@ void SendState() {
 
   data[4] = CRC8(&data[2], 2);
 
-  //uart.write(data, sizeof(data));
-  Serial.write(data, sizeof(data));
-  
-  /// DEBUG
-  /*for (int i = 0; i<sizeof(data); i++) {
-    Serial.print(data[i], HEX);
-  }*/
-  ///
+  //Serial.write(data, sizeof(data));
+  uart.write(data, sizeof(data));
 }
 
 void ReceiveData() {
   
-  //if (uart.available() >= (packet.len != 0) ? packet.len : 1) {
-  if (Serial.available() >= (packet.len != 0) ? packet.len : 1) {
-    //uint8_t numBytes = uart.readBytes(packet.data, (packet.len != 0) ? packet.len : 1);
-    uint8_t numBytes = Serial.readBytes(packet.data, (packet.len != 0) ? packet.len : 1);
-    
-    /// DEBUG
-    /*for(int i = 0; i < numBytes; i++) {
-      Serial.print(packet.data[i], HEX);
-    }*/
-    ///
-    
+  //if (Serial.available() > 0) {
+    //uint8_t read = Serial.read();
+  if (uart.available() > 0) {
+    uint8_t read = uart.read();
+
     switch (packet.state)
     {
     case PacketState::GET_SOF:
-      if (packet.data[0] == SERIAL_SOF)
+      if (read == SERIAL_SOF)
         packet.len++;
       if (packet.len == 2) {
-        packet.len = 3;
+        packet.len = 0;
         packet.state = PacketState::GET_DATA;
       }
 
       break;
     case PacketState::GET_DATA:
-      if (!CRC8(packet.data, sizeof(packet.data)))
-        DecodePacket(packet.data);
-      break;
-    default:
+      if (read == SERIAL_SOF)
+        break;
+      packet.data[packet.len++] = read;
+
+      if (packet.len == SERIAL_DATA_LEN) {
+        if (!CRC8(packet.data, SERIAL_DATA_LEN))
+          DecodePacket(packet.data);
+        packet.len = 0;
+        packet.state = PacketState::GET_SOF;
+      }
       break;
     }
+
   }
+
 }
 
 
@@ -288,7 +296,7 @@ void setup() {
   
   uart.begin((long)BaudRate::BAUD_9600);
 
-  delay(5000);
+  delay(START_UP_DLY_MS);
 }
 
 State lastState = State::IDLE;
