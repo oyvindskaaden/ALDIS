@@ -144,12 +144,28 @@ void SendState() {
 
   data[4] = CRC8(&data[2], 2);
 
-  uart.write(data, sizeof(data));
+  //uart.write(data, sizeof(data));
+  Serial.write(data, sizeof(data));
+  
+  /// DEBUG
+  /*for (int i = 0; i<sizeof(data); i++) {
+    Serial.print(data[i], HEX);
+  }*/
+  ///
 }
 
 void ReceiveData() {
-  if (uart.available() >= (packet.len != 0) ? packet.len : 1) {
-    uart.readBytes(packet.data, (packet.len != 0) ? packet.len : 1);
+  
+  //if (uart.available() >= (packet.len != 0) ? packet.len : 1) {
+  if (Serial.available() >= (packet.len != 0) ? packet.len : 1) {
+    //uint8_t numBytes = uart.readBytes(packet.data, (packet.len != 0) ? packet.len : 1);
+    uint8_t numBytes = Serial.readBytes(packet.data, (packet.len != 0) ? packet.len : 1);
+    
+    /// DEBUG
+    /*for(int i = 0; i < numBytes; i++) {
+      Serial.print(packet.data[i], HEX);
+    }*/
+    ///
     
     switch (packet.state)
     {
@@ -267,7 +283,9 @@ void setup() {
   pinMode(button, INPUT_PULLUP);
 
   attachInterrupt(digitalPinToInterrupt(button), ChangeStateISR, RISING);
+  Serial.begin((long)BaudRate::BAUD_9600);
 
+  
   uart.begin((long)BaudRate::BAUD_9600);
 }
 
@@ -292,5 +310,7 @@ void loop() {
     DoStageReadyState();
     break;
   }
+
+  ReceiveData();
 
 }
