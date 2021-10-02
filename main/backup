@@ -26,10 +26,10 @@ enum class BaudRate : uint32_t {
 };
 
 enum class State : uint8_t{
-  IDLE,
-  STAGE_BUSY,
-  TIMEOUT,
-  STAGE_RDY
+  IDLE          = 0x01,
+  STAGE_BUSY    = 0x02,
+  TIMEOUT       = 0x04,
+  STAGE_RDY     = 0x08
 };
 
 struct RGB {
@@ -69,7 +69,7 @@ uint32_t now = 0;
 uint32_t then = 0;
 bool isLedOn = false;
 
-SoftwareSerial uart(5, 6); // RX -> Pin 5, TX -> Pin 6
+SoftwareSerial uart(3, 4); // RX -> Pin 5, TX -> Pin 6
 
 // Red: Pin 11, Green: Pin 10, Blue: Pin 9
 uint8_t rgbPins[3] = {11, 10, 9};
@@ -124,10 +124,7 @@ void DecodePacket(uint8_t data[3]) {
   switch ((SerialCMD)data[0])
   {
   case SerialCMD::STATE:
-    if (data[1] <= (uint8_t)State::STAGE_RDY) {
-      lastChange = millis();
-      state = (State)data[1];
-    }
+    state = (State)data[1];
     break;
   case SerialCMD::BUTTON:
     ChangeStateISR();
@@ -271,13 +268,8 @@ void setup() {
   uart.begin((long)BaudRate::BAUD_9600);
 }
 
-State lastState = State::IDLE;
 void loop() {
 
-  if(lastState != state) {
-    SendState();
-    lastState = state;
-  }
   switch (state) {
   case State::IDLE:
     DoIdleState();
