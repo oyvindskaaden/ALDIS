@@ -287,6 +287,8 @@ void setup() {
 
   
   uart.begin((long)BaudRate::BAUD_9600);
+
+  delay(5000);
 }
 
 State lastState = State::IDLE;
