@@ -1,0 +1,208 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "ALDIS"
+Date "2021-11-29"
+Rev "1"
+Comp "FK - Øyvind Skaaden"
+Comment1 "Createtd for UKErevyen 2021"
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_Module:Arduino_Nano_v3.x A?
+U 1 1 61A4D8E8
+P 8700 4850
+F 0 "A?" H 9150 5900 50  0000 C CNN
+F 1 "Arduino_Nano_v3.x" H 9450 5800 50  0000 C CNN
+F 2 "Module:Arduino_Nano" H 8700 4850 50  0001 C CIN
+F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 8700 4850 50  0001 C CNN
+	1    8700 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 61A50B1B
+P 5900 3950
+F 0 "J?" H 5950 3650 50  0000 R CNN
+F 1 "Conn_01x04_Male" H 6250 4150 50  0000 R CNN
+F 2 "" H 5900 3950 50  0001 C CNN
+F 3 "~" H 5900 3950 50  0001 C CNN
+	1    5900 3950
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	6950 5550 7150 5550
+Wire Wire Line
+	6950 5350 7150 5350
+Wire Wire Line
+	6950 5150 7150 5150
+$Comp
+L Device:R R?
+U 1 1 61A628D8
+P 7300 5550
+F 0 "R?" V 7200 5550 50  0000 C CNN
+F 1 "220" V 7300 5550 50  0000 C CNN
+F 2 "" V 7230 5550 50  0001 C CNN
+F 3 "~" H 7300 5550 50  0001 C CNN
+	1    7300 5550
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 61A6268D
+P 7300 5350
+F 0 "R?" V 7200 5350 50  0000 C CNN
+F 1 "150" V 7300 5350 50  0000 C CNN
+F 2 "" V 7230 5350 50  0001 C CNN
+F 3 "~" H 7300 5350 50  0001 C CNN
+	1    7300 5350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 61A62276
+P 7300 5150
+F 0 "R?" V 7200 5150 50  0000 C CNN
+F 1 "150" V 7300 5150 50  0000 C CNN
+F 2 "" V 7230 5150 50  0001 C CNN
+F 3 "~" H 7300 5150 50  0001 C CNN
+	1    7300 5150
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:LED_BGCR D?
+U 1 1 61A52B59
+P 6750 5350
+F 0 "D?" H 6750 5000 50  0000 C CNN
+F 1 "LED_BGCR" H 6750 5750 50  0000 C CNN
+F 2 "" H 6750 5300 50  0001 C CNN
+F 3 "~" H 6750 5300 50  0001 C CNN
+	1    6750 5350
+	1    0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 61A80DF5
+P 6400 5500
+F 0 "#PWR?" H 6400 5250 50  0001 C CNN
+F 1 "GND" H 6405 5327 50  0000 C CNN
+F 2 "" H 6400 5500 50  0001 C CNN
+F 3 "" H 6400 5500 50  0001 C CNN
+	1    6400 5500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6400 5500 6400 5350
+Wire Wire Line
+	6400 5350 6550 5350
+$Comp
+L power:GND #PWR?
+U 1 1 61A815C5
+P 8800 6050
+F 0 "#PWR?" H 8800 5800 50  0001 C CNN
+F 1 "GND" H 8805 5877 50  0000 C CNN
+F 2 "" H 8800 6050 50  0001 C CNN
+F 3 "" H 8800 6050 50  0001 C CNN
+	1    8800 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8700 5850 8700 5950
+Wire Wire Line
+	8700 5950 8800 5950
+Wire Wire Line
+	8800 5950 8800 5850
+Wire Wire Line
+	8800 5950 8800 6050
+Connection ~ 8800 5950
+$Comp
+L power:GND #PWR?
+U 1 1 61A8578E
+P 7050 4250
+F 0 "#PWR?" H 7050 4000 50  0001 C CNN
+F 1 "GND" H 7055 4077 50  0000 C CNN
+F 2 "" H 7050 4250 50  0001 C CNN
+F 3 "" H 7050 4250 50  0001 C CNN
+	1    7050 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW?
+U 1 1 61A4F4C6
+P 7300 4200
+F 0 "SW?" H 7300 4485 50  0000 C CNN
+F 1 "SW_Push" H 7300 4394 50  0000 C CNN
+F 2 "" H 7300 4400 50  0001 C CNN
+F 3 "~" H 7300 4400 50  0001 C CNN
+	1    7300 4200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 4250 7050 4200
+Wire Wire Line
+	7050 4200 7100 4200
+Wire Wire Line
+	7850 4450 8200 4450
+Wire Wire Line
+	7850 4450 7850 4200
+Wire Wire Line
+	7850 4200 7500 4200
+Wire Wire Line
+	6100 3750 8600 3750
+Wire Wire Line
+	8600 3750 8600 3850
+Wire Wire Line
+	6100 3850 6700 3850
+Wire Wire Line
+	6700 3850 6700 4750
+Wire Wire Line
+	6700 4750 8200 4750
+Wire Wire Line
+	8200 4850 6600 4850
+Wire Wire Line
+	6600 4850 6600 3950
+Wire Wire Line
+	6600 3950 6100 3950
+Wire Wire Line
+	7450 5150 8200 5150
+Wire Wire Line
+	7450 5350 7450 5250
+Wire Wire Line
+	7450 5250 8200 5250
+Wire Wire Line
+	7450 5550 7550 5550
+Wire Wire Line
+	7550 5550 7550 5350
+Wire Wire Line
+	7550 5350 8200 5350
+$Comp
+L power:GND #PWR?
+U 1 1 61AAD0F2
+P 6500 4150
+F 0 "#PWR?" H 6500 3900 50  0001 C CNN
+F 1 "GND" H 6505 3977 50  0000 C CNN
+F 2 "" H 6500 4150 50  0001 C CNN
+F 3 "" H 6500 4150 50  0001 C CNN
+	1    6500 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6100 4050 6500 4050
+Wire Wire Line
+	6500 4050 6500 4150
+Text Notes 5850 3800 2    50   ~ 0
++5V
+Text Notes 5850 3900 2    50   ~ 0
+RX
+Text Notes 5850 4000 2    50   ~ 0
+TX
+Text Notes 5850 4100 2    50   ~ 0
+GND\n
+Text Notes 7000 6850 0    197  ~ 0
+ALDIS - Main Schematic
+$EndSCHEMATC
