@@ -5,7 +5,7 @@
 #define   RDY_BLINK_PERIOD_MS     250
 #define   IDLE_PULSE_PERIOD_MS    8
 #define   TIMEOUT_PULSE_PERIOD_MS 1
-#define   TIMEOUT_DELAY_MS        10000
+#define   TIMEOUT_DELAY_MS        30000
 #define   TIME_TO_IDLE_MS         3000   
 
 #define   SERIAL_SOF              0x88
